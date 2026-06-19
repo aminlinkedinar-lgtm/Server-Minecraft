@@ -6,15 +6,19 @@
     <title>Home Server Minecraft</title>
 </head>
 <body>
-    {% if user.is %}
+    {% if user.is_authenticated %}
         <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
             <button type="submit">out from site</button>
         </form>
+
+        <a href="{% url 'server_list' %}">Server List</a>   
+
     {% else %}
         <form method="get" action="{% url 'login' %}">
             <button type="submit">Enter to site</button>
         </form> {% endif %} 
-    <h1>site show your server Minecraft</h1>       
+    <h1>site show your server Minecraft</h1> 
+       
 </body>
 </html>

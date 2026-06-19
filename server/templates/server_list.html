@@ -6,9 +6,20 @@
     <title>Server List</title>
 </head>
 <body>
-    <h1>your server list</h1>
-    <h2>{{server_name}} {{type}} {{ip}}</h2>
-    <h2>{{explain}}{{some_player}}{{gg}}</h2>
-    <h2>{{qq}}{{ss}}</h2>
+    {% if user.is_authenticated %}
+        <a href="{% url 'home' %}">Home</a>
+        <h1>your server list</h1>
+        {% for item in server%}
+            <p><a href="{% url 'server_information'%}?id={{ item.id }} ">{{ item.server_name }}</a></p>
+        {% endfor %} 
+
+        
+
+        <a href="{% url 'add_server' %}">add server</a>
+
+    {% else %}
+        <form method="get" action="{% url 'login' %}">
+         <button type="submit">Enter to site</button>
+        </form> {% endif %}  
 </body>
 </html>
