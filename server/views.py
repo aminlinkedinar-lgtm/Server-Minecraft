@@ -43,4 +43,12 @@ def server_information_viwe(request):
 
     return render(request, "show_server_information.html", context)
 
+def delete_server_viwe(request):
+    if request.method == "POST":
+        server_id = request.POST.get('id')
+        server = Server.objects.filter(id=server_id).filter()
+        if server:
+            server.delete()
+    return redirect('server_list')
+
 

@@ -11,9 +11,11 @@
         <h1>your server list</h1>
         {% for item in server%}
             <p><a href="{% url 'server_information'%}?id={{ item.id }} ">{{ item.server_name }}</a></p>
-        {% endfor %} 
-
-        
+                <form method='post' action={% url 'delete_server' %} >
+                    {% csrf_token %}
+                    <button type="submit" name='id' value='{{ item.id }}'>delete</button>
+                </form>    
+        {% endfor %}      
 
         <a href="{% url 'add_server' %}">add server</a>
 
