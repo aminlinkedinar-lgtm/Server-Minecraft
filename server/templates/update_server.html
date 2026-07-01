@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>page add a new server </title>
+    <title>update</title>
 </head>
 <body>
     {% if user.is_authenticated %}
-        <h1>add new server</h1>
-        <form method="POST">
+        <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="save new server">
-        </form> 
+            <button type="submit">Update</button>
+        </form>
     {% else %}
         <form method="get" action="{% url 'login' %}">
             <button type="submit">Enter to site</button>
-        </form> {% endif %}        
+        </form> {% endif %}     
 </body>
 </html>

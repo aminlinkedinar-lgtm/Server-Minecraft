@@ -51,4 +51,18 @@ def delete_server_viwe(request):
             server.delete()
     return redirect('server_list')
 
+def update_server_viwe(request, id):
+    server = Server.objects.get(id=id)
+
+    if request.method == "POST":
+        form = ServerForm(request.POST, instance=server)
+        if form.is_valid():
+            form.save()
+            return redirect('server_list')
+    else:
+        form = ServerForm(instance=server)
+
+    context = {'form':form}   
+    return render(request, "update_server.html", context)
+
 

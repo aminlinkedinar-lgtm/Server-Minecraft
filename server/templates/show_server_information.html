@@ -10,13 +10,13 @@
     
         <h1>server</h1>
         <h2>server_name: {{server_name}},version: {{version}},ip: {{ip}}</h2>
-        <h2>{{description}}{{number_of_players}}{{server_status}}</h2>
-        <h2>{{creation_data}}{{server_owner}}</h2>
+        <h2>description:{{description}},number_of_players:{{number_of_players}}server_status:{{server_status}}</h2>
+        <h2>creation_data:{{creation_data}}server_owner:{{server_owner}}</h2>
         <a href="{% url 'home' %}">Home</a>    
-        {% else %}
-        <form method="get" action="{% url 'login' %}">
-         <button type="submit">Enter to site</button>
-        </form> {% endif %} 
+    {% else %}
+    <form method="get" action="{% url 'login' %}">
+        <button type="submit">Enter to site</button>
+    </form> {% endif %} 
         
          
 </body>

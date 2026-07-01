@@ -15,10 +15,12 @@
                     {% csrf_token %}
                     <button type="submit" name='id' value='{{ item.id }}'>delete</button>
                 </form>    
-        {% endfor %}      
 
-        <a href="{% url 'add_server' %}">add server</a>
-
+            <a href="{% url 'update_server' item.id %}">update server</a>
+        {% endfor %} 
+         
+        
+        <a href="{% url 'add_server' %}">add server</a>       
     {% else %}
         <form method="get" action="{% url 'login' %}">
          <button type="submit">Enter to site</button>
