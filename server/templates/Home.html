@@ -17,7 +17,10 @@
     {% else %}
         <form method="get" action="{% url 'login' %}">
             <button type="submit">Enter to site</button>
-        </form> {% endif %} 
+        </form> 
+        <form method="get" action="{% url 'register_server' %}">
+            <button type="submit">register</button>
+        </form>{% endif %}     
     <h1>site show your server Minecraft</h1> 
        
 </body>

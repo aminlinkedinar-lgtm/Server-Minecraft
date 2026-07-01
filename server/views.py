@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Server
-import requests
 from .forms import ServerForm
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 def home_server_viwe(request):
@@ -64,5 +64,17 @@ def update_server_viwe(request, id):
 
     context = {'form':form}   
     return render(request, "update_server.html", context)
+
+def register_server_viwe(request):
+    if request.method == "POST": 
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Home')
+    else:
+        form = UserCreationForm()
+        
+    context = {'form':form}
+    return render(request, "register.html", context)        
 
 
