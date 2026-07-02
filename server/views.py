@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from .models import Server
-from .forms import ServerForm
+from .models import Server, Profile
+from .forms import ServerForm, ProfileForm
 from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
@@ -77,4 +77,22 @@ def register_server_viwe(request):
     context = {'form':form}
     return render(request, "register.html", context)        
 
+def profile_server_viwe(request):
+    profile_id = request.GET.get("id")
+    if profile_id:
+        profile = Profile.objects.get(id=profile_id)
+    else:    
+        profile = Profile.objects.all().first()
+        if profile is None:
+            return render(request, 'profile.html', {"massage":"dont ther"})
+    
+    context = {'user':profile.user,
+                'first_name':profile.first_name,
+                'last_name':profile.last_name,
+                'phone_number':profile.phone_number,
+                'biography':profile.biography,
+                'date_of_birth':profile.date_of_birth,
+                'city':profile.city,    
+                }
 
+    return render(request, "Profile.html", context)

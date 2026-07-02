@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>register site</h1>
-    <form method="post">
+    <form method="Post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Register</button>

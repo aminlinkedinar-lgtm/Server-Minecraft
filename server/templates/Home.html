@@ -13,7 +13,7 @@
         </form>
 
         <a href="{% url 'server_list' %}">Server List</a>   
-
+        <a href="{% url 'profile' %}">Profile</a>
     {% else %}
         <form method="get" action="{% url 'login' %}">
             <button type="submit">Enter to site</button>
