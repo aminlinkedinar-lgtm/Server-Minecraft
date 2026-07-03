@@ -30,7 +30,7 @@ def add_server_viwe(request):
 def server_information_viwe(request):
     server_id = request.GET.get("id")
     if server_id:
-        server = Server.objects.get(id=server_id)
+        server = Server.objects.get(id=server_id, server_owner = request.user)
     else:    
         server = Server.objects.all().first()
 
@@ -49,13 +49,13 @@ def server_information_viwe(request):
 def delete_server_viwe(request):
     if request.method == "POST":
         server_id = request.POST.get('id')
-        server = Server.objects.filter(id=server_id).filter()
+        server = Server.objects.filter(id=server_id, server_owner = request.user).filter()
         if server:
             server.delete()
     return redirect('server_list')
 
 def update_server_viwe(request, id):
-    server = Server.objects.get(id=id)
+    server = Server.objects.get(id=id, server_owner = request.user)
 
     if request.method == "POST":
         form = ServerForm(request.POST, instance=server)
@@ -128,6 +128,12 @@ def edit_profile_viwe(request):
     context = {'form':form}   
     return render(request, "edit_profile.html", context)
 
+def delete_account_view(request):
+    if request.method == "POST":
+            request.user.delete()
+            return redirect('home')
+    
+    return render(request, "delete_account.html")
 
 
 

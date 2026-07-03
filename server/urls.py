@@ -12,4 +12,5 @@ urlpatterns = [
     path('profile/', profile_server_viwe, name = 'profile'),
     path('add_profile/',create_profile_viwe, name = 'create_profile'),
     path('edit-profile/', edit_profile_viwe, name = 'edit_profile'),
+    path('delete-account/',delete_account_view, name = 'delete_account'),
     ]
