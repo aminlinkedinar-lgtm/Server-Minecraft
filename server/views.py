@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from .models import Server, Profile
-from .forms import ServerForm, ProfileForm
+from .models import *
+from .forms import *
 from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
@@ -69,8 +69,9 @@ def register_server_viwe(request):
     if request.method == "POST": 
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('Home')
+            user = form.save()
+            Profile.objects.create(user=user)
+            return redirect('home')
     else:
         form = UserCreationForm()
         
@@ -96,3 +97,50 @@ def profile_server_viwe(request):
                 }
 
     return render(request, "Profile.html", context)
+
+def create_profile_viwe(request):
+    if  request.method == 'POST':
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+        else:
+            form = ProfileForm()
+
+        context = {'form': form}
+        return render(request, "add_profile.html", context)    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

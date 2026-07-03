@@ -10,4 +10,5 @@ urlpatterns = [
     path('server/update/<int:id>/', update_server_viwe, name='update_server'),
     path('register/', register_server_viwe, name='register_server'),
     path('profile/', profile_server_viwe, name = 'profile'),
+    path('add_profile/',create_profile_viwe, name = 'create_profile')
     ]
