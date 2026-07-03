@@ -2,13 +2,14 @@ from django.shortcuts import render,redirect
 from .models import *
 from .forms import *
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def home_server_viwe(request):
     return render(request, 'Home.html')
 
 def server_list_viwe(request):
-    server = Server.objects.all()
+    server = Server.objects.filter(server_owner=request.user)
     context = {'server':server}
     return render(request, 'server_list.html', context)
 
@@ -16,7 +17,9 @@ def add_server_viwe(request):
     if request.method == "POST":
         form = ServerForm(request.POST)
         if form.is_valid():
-            form.save()
+            server = form.save(commit=False)
+            server.server_owner = request.user
+            server.save()
             return redirect('server_list')
     else:
         form = ServerForm() 
@@ -83,7 +86,7 @@ def profile_server_viwe(request):
     if profile_id:
         profile = Profile.objects.get(id=profile_id)
     else:    
-        profile = Profile.objects.all().first()
+        profile = Profile.objects.get(user=request.user)
         if profile is None:
             return render(request, 'profile.html', {"massage":"dont ther"})
     
@@ -98,6 +101,7 @@ def profile_server_viwe(request):
 
     return render(request, "Profile.html", context)
 
+@login_required
 def create_profile_viwe(request):
     if  request.method == 'POST':
         form = ProfileForm(request.POST)
@@ -110,8 +114,19 @@ def create_profile_viwe(request):
         context = {'form': form}
         return render(request, "add_profile.html", context)    
 
+@login_required
+def edit_profile_viwe(request):
+    profile = Profile.objects.get(user = request.user)
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance = profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=profile)
 
-
+    context = {'form':form}   
+    return render(request, "edit_profile.html", context)
 
 
 
