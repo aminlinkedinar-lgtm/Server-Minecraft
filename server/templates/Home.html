@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Server Minecraft</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %} Home Server Minecraft {% endblock %} 
+
+{% block content %}
     {% if user.is_authenticated %}
         <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
@@ -20,8 +17,7 @@
         </form> 
         <form method="get" action="{% url 'register_server' %}">
             <button type="submit">register</button>
-        </form>{% endif %}     
-    <h1>site show your server Minecraft</h1> 
-       
-</body>
-</html>
+        </form>
+    {% endif %}     
+    <h1>Minecraft Server Manager</h1> 
+{% endblock %}       

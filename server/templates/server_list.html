@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server List</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}
+    Server List
+{% endblock %}
+
+{% block content %}
+
     {% if user.is_authenticated %}
         <a href="{% url 'home' %}">Home</a>
         <h1>your server list</h1>
@@ -25,5 +25,5 @@
         <form method="get" action="{% url 'login' %}">
          <button type="submit">Enter to site</button>
         </form> {% endif %}  
-</body>
-</html>
+
+{% endblock %}
