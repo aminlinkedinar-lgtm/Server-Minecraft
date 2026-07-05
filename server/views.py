@@ -8,11 +8,13 @@ from django.contrib.auth.decorators import login_required
 def home_server_viwe(request):
     return render(request, 'Home.html')
 
+@login_required
 def server_list_viwe(request):
     server = Server.objects.filter(server_owner=request.user)
     context = {'server':server}
     return render(request, 'server_list.html', context)
 
+@login_required
 def add_server_viwe(request):
     if request.method == "POST":
         form = ServerForm(request.POST)
@@ -28,11 +30,7 @@ def add_server_viwe(request):
     return render(request, "add_server.html", context)        
 
 def server_information_viwe(request):
-    server_id = request.GET.get("id")
-    if server_id:
-        server = Server.objects.get(id=server_id, server_owner = request.user)
-    else:    
-        server = Server.objects.all().first()
+    server = Server.objects.get(server_owner = request.user)
 
     context = {'server_name':server.server_name,
                 'version':server.version,
@@ -46,14 +44,16 @@ def server_information_viwe(request):
 
     return render(request, "show_server_information.html", context)
 
+@login_required
 def delete_server_viwe(request):
     if request.method == "POST":
         server_id = request.POST.get('id')
-        server = Server.objects.filter(id=server_id, server_owner = request.user).filter()
+        server = Server.objects.filter(id=server_id, server_owner = request.user)
         if server:
             server.delete()
     return redirect('server_list')
 
+@login_required
 def update_server_viwe(request, id):
     server = Server.objects.get(id=id, server_owner = request.user)
 
@@ -81,14 +81,11 @@ def register_server_viwe(request):
     context = {'form':form}
     return render(request, "register.html", context)        
 
+@login_required
 def profile_server_viwe(request):
-    profile_id = request.GET.get("id")
-    if profile_id:
-        profile = Profile.objects.get(id=profile_id)
-    else:    
-        profile = Profile.objects.get(user=request.user)
-        if profile is None:
-            return render(request, 'profile.html', {"massage":"dont ther"})
+    profile = Profile.objects.get(user=request.user)
+    if profile is None:
+        return render(request, 'profile.html', {"massage":"dont ther"})
     
     context = {'user':profile.user,
                 'first_name':profile.first_name,
@@ -101,8 +98,7 @@ def profile_server_viwe(request):
 
     return render(request, "Profile.html", context)
 
-@login_required
-def create_profile_viwe(request):
+
     if  request.method == 'POST':
         form = ProfileForm(request.POST)
         if form.is_valid():
@@ -128,6 +124,7 @@ def edit_profile_viwe(request):
     context = {'form':form}   
     return render(request, "edit_profile.html", context)
 
+@login_required
 def delete_account_view(request):
     if request.method == "POST":
             request.user.delete()
