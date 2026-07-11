@@ -13,9 +13,29 @@ def home_server_viwe(request):
 @login_required
 def server_list_viwe(request):
     search = request.GET.get("search")
+    sort = request.GET.get("sort")
     server = Server.objects.filter(server_owner=request.user)
     if search:
         server = server.filter(server_name__icontains=search)
+        
+    if sort == "newest":
+        server = server.order_by("-creation_data")
+
+    elif sort == "oldest":
+        server = server.order_by("creation_data")
+
+    elif sort == "players":
+        server = server.order_by("-number_of_players")
+
+    elif sort == "low_players":
+        server = server.order_by("number_of_players")
+
+    elif sort == "online":
+        server = server.filter(server_status=True)
+
+    elif sort == "offline":
+        server = server.filter(server_status=False)            
+    
     context = {'server':server}
     return render(request, 'server_list.html', context)
 

@@ -8,14 +8,36 @@
 
     {% if user.is_authenticated %}
         <form method="GET">
+
             <input
                 type="text"
                 name="search"
-                placeholder="Search server"
+                placeholder="Search..."
                 value="{{ request.GET.search }}">
-                       
-            <button type="submit"></button>
-        </form>    
+
+            <select name="sort">
+
+                <option value="">Sort</option>
+
+                <option value="newest">Newest</option>
+
+                <option value="oldest">Oldest</option>
+
+                <option value="players">Most Players</option>
+
+                <option value="low_players">Least Players</option>
+
+                <option value="online">Online</option>
+
+                <option value="offline">Offline</option>
+
+            </select>
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>   
 
         <a href="{% url 'home' %}">Home</a>
         <h1>your server list</h1>
