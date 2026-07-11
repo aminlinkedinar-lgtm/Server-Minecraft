@@ -12,7 +12,10 @@ def home_server_viwe(request):
 
 @login_required
 def server_list_viwe(request):
+    search = request.GET.get("search")
     server = Server.objects.filter(server_owner=request.user)
+    if search:
+        server = server.filter(server_name__icontains=search)
     context = {'server':server}
     return render(request, 'server_list.html', context)
 
