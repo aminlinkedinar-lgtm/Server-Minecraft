@@ -28,4 +28,6 @@ class Profile(models.Model):
     biography = models.TextField(blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
-     
+
+    def __str__(self):
+        return self.first_name

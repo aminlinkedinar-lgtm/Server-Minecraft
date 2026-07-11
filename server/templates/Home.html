@@ -1,23 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %} Home Server Minecraft {% endblock %} 
+{% block title %}
+Home
+{% endblock %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit">out from site</button>
-        </form>
 
-        <a href="{% url 'server_list' %}">Server List</a>   
-        <a href="{% url 'profile' %}">Profile</a>
-    {% else %}
-        <form method="get" action="{% url 'login' %}">
-            <button type="submit">Enter to site</button>
-        </form> 
-        <form method="get" action="{% url 'register_server' %}">
-            <button type="submit">register</button>
-        </form>
-    {% endif %}     
-    <h1>Minecraft Server Manager</h1> 
-{% endblock %}       
+<h1>Welcome to Minecraft Server Manager</h1>
+
+<p>Manage your Minecraft servers easily.</p>
+
+{% endblock %}
