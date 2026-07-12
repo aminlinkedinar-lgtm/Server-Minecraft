@@ -4,13 +4,21 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
+
+class ServerStatus(models.TextChoices):
+    ONLINE = "online", "Online"
+    OFFLINE = "offline", "Offline"
+
 class Server(models.Model):
     server_name = models.CharField(max_length=50)
     version = models.CharField( max_length=50)
     ip = models.GenericIPAddressField()
     description = models.TextField()
     number_of_players = models.IntegerField(default=0)
-    server_status = models.choices()
+    server_status = models.CharField(
+        max_length=10,
+        choices=ServerStatus.choices,
+        default=ServerStatus.ONLINE,)
     creation_data = models.DateTimeField(auto_now_add=True)
     server_owner  = models.ForeignKey( settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
