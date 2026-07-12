@@ -21,8 +21,12 @@
 
     <p><strong>city</strong> {{ city }}</p>
 
-    {% if profile_picture %}
-        <img src="{{ profile_picture.url }}" width="200">
+    {% if user.profile.profile_picture %}
+        <img src="{{ user.profile.profile_picture.url }}"
+            width="200"
+            alt="Profile Picture">
+    {% else %}
+        <p>No profile picture.</p>
     {% endif %}
 
     <br><br>

@@ -21,13 +21,17 @@ class Profile(models.Model):
     user = models.OneToOneField(
     settings.AUTH_USER_MODEL,
     on_delete=models.CASCADE)
-    # profile_picture = models.ImageField()
+    profile_picture = models.ImageField(
+        upload_to = "profile_pictures/",
+        blank = True,
+        null = True
+    )
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
     phone_number = models.CharField(max_length=12, blank=True)
     biography = models.TextField(blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
-    city = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.first_name
