@@ -10,7 +10,7 @@ class Server(models.Model):
     ip = models.GenericIPAddressField()
     description = models.TextField()
     number_of_players = models.IntegerField(default=0)
-    server_status = models.BooleanField()
+    server_status = models.choices()
     creation_data = models.DateTimeField(auto_now_add=True)
     server_owner  = models.ForeignKey( settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
@@ -34,4 +34,4 @@ class Profile(models.Model):
     city = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return self.first_name
+        return f"{self.first_name} {self.last_name}"

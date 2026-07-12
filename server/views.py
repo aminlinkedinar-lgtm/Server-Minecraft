@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.contrib.auth import logout
 # Create your views here.
 
 def home_server_viwe(request):
@@ -52,7 +53,7 @@ def add_server_viwe(request):
             server = form.save(commit=False)
             server.server_owner = request.user
             server.save()
-            messages.success(request, "Server delete successfully")
+            messages.success(request, "Server created successfully.")
             return redirect('server_list')
     else:
         form = ServerForm() 
@@ -62,6 +63,8 @@ def add_server_viwe(request):
 
 def server_information_viwe(request):
     server_id = request.GET.get("id")
+    if not server_id:
+        return redirect("server_list")
     server = get_object_or_404(Server, id = server_id, server_owner = request.user)
 
     context = {'server_name':server.server_name,
@@ -111,7 +114,7 @@ def register_server_viwe(request):
         if form.is_valid():
             user = form.save()
             Profile.objects.create(user=user)
-            message.success(request, "Your account  has been created successfully.")
+            messages.success(request, "Your account has been created successfully.")
             return redirect('home')
     else:
         form = UserCreationForm()
@@ -123,7 +126,7 @@ def register_server_viwe(request):
 def profile_server_viwe(request):
     profile = get_object_or_404(Profile, user=request.user)
     
-    context = {'user':profile.user,
+    context = {
                 'first_name':profile.first_name,
                 'last_name':profile.last_name,
                 'phone_number':profile.phone_number,
@@ -165,6 +168,7 @@ def edit_profile_viwe(request):
 def delete_account_view(request):
     if request.method == "POST":
             request.user.delete()
+            logout(request)
             messages.success(request, "Your account has been deleted.")
             return redirect('home')
     
