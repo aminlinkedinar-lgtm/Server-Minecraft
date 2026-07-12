@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+from django.core.paginator import Paginator
 # Create your views here.
 
 def home_server_viwe(request):
@@ -35,6 +36,10 @@ def server_list_viwe(request):
 
     elif sort == "offline":
         server = server.filter(server_status=False)            
+    
+    paginator = Paginator(server, 5)
+    page_number = request.GET.get("page")
+    server = paginator.get_page(page_number)
     
     context = {'server':server}
     return render(request, 'server_list.html', context)

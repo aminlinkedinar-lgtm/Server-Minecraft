@@ -19,17 +19,35 @@
 
                 <option value="">Sort</option>
 
-                <option value="newest">Newest</option>
+                <option value="newest"
+                {% if request.GET.sort == "newest" %}
+                selected{% endif %}>
+                Newest</option>
 
-                <option value="oldest">Oldest</option>
+                <option value="oldest"
+                {% if request.GET.sort == "oldest" %}
+                selected{% endif %}>
+                Oldest</option>
 
-                <option value="players">Most Players</option>
+                <option value="players"
+                {% if request.GET.sort == "players" %}
+                selected{% endif %}>
+                Most Players</option>
 
-                <option value="low_players">Least Players</option>
+                <option value="low_players"
+                {% if request.GET.sort == "low_players" %}
+                selected{% endif %}>
+                Least Players</option>
 
-                <option value="online">Online</option>
+                <option value="online"
+                {% if request.GET.sort == "online" %}
+                selected{% endif %}>
+                Online</option>
 
-                <option value="offline">Offline</option>
+                <option value="offline"
+                {% if request.GET.sort == "offline" %}
+                selected{% endif %}>
+                Offline</option>
 
             </select>
 
@@ -56,6 +74,31 @@
     {% else %}
         <form method="get" action="{% url 'login' %}">
          <button type="submit">Enter to site</button>
-        </form> {% endif %}  
+        </form> {% endif %} 
+        
+    <div>
+
+        {% if server.has_previous %}
+            <a href="?page=1&search={{ request.GET.search }}&sort={{ request.GET.sort }}">&laquo; First</a>
+
+            <a href="?page={{ server.previous_page_number }}&search={{ request.GET.search }}&sort={{ request.GET.sort }}">
+                previous
+            </a>
+        {% endif %}
+        
+        <span>
+            page {{ server.number }} of {{ server.paginator.num_pages }}
+        </span>
+        
+        {% if server.has_next %}
+            <a href="?page={{ server.next_page_number }}">
+                Next
+            </a>
+            
+            <a href="?page={{ server.paginator.num_pages }}&search={{ request.GET.search}}&sort={{ request.GET.sort }}">
+                Lasr &raquo;
+            </a>
+        {% endif %}
+    </div>            
 
 {% endblock %}
